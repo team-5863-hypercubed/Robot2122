@@ -1,122 +1,85 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.autos;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.DeployControl;
+import frc.robot.commands.IntakeControl;
+import frc.robot.commands.Shoot;
+import frc.robot.subsystems.Deploy;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
-public class UpRedDownBlueAuto extends CommandBase {
-  private final DriveTrain m_driveTrain;
+public class UpRedDownBlueAuto extends SequentialCommandGroup {
 
-  double myStartTime;
-  double myTime;
-  boolean myAutonFinished = false;
+    public UpRedDownBlueAuto(DriveTrain m_driveTrain, Shooter m_Shooter, Intake m_Intake, Deploy m_deploy) {
 
-  private Intake s_Intake;
-  double power;
+        addCommands(
+            new ParallelDeadlineGroup( //Shoot&Wait
+              new WaitCommand(5.0),
+              new Shoot(m_Shooter, 0.4)
+            ),
 
-  /** Creates a new DownRedUpBlueAuto. */
-  public UpRedDownBlueAuto(DriveTrain m_driveTrain, Intake s_Intake){
-    this.m_driveTrain = m_driveTrain;
+            new ParallelDeadlineGroup( //Drive Backwards
+                new WaitCommand(1.4),
+                new IntakeControl(m_Intake, 0.4),
+                new DeployControl(m_deploy, 0.3),
+                new InstantCommand(() -> m_driveTrain.arcadeDrive(0.7, 0))
+            ),
+
+            new InstantCommand(() -> m_driveTrain.arcadeDrive(0, 0)),
+
+            new ParallelDeadlineGroup( // Rotate CCW
+                new WaitCommand(0.65),
+                new IntakeControl(m_Intake, 0.4),
+                new InstantCommand(() -> m_driveTrain.arcadeDrive(0.0, -0.7))
+            ),
+
+            new InstantCommand(() -> m_driveTrain.arcadeDrive(0, 0)),
+
+            new ParallelDeadlineGroup( //Drive Forward
+                new WaitCommand(0.85),
+                new IntakeControl(m_Intake, 0.4),
+                new InstantCommand(() -> m_driveTrain.arcadeDrive(0.7, 0))
+            ),
+
+            new InstantCommand(() -> m_driveTrain.arcadeDrive(0, 0)),
+
+            new ParallelDeadlineGroup( //Drive Backwards
+                new WaitCommand(0.77),
+                new IntakeControl(m_Intake, 0.4),
+                new InstantCommand(() -> m_driveTrain.arcadeDrive(0.7, 0.0))
+            ),
+
+            new InstantCommand(() -> m_driveTrain.arcadeDrive(0, 0)),
+
+            new ParallelDeadlineGroup( //Rotate CW
+                new WaitCommand(0.65),
+                new InstantCommand(() -> m_driveTrain.arcadeDrive(0.0, -0.7))
+            ),
+
+            new InstantCommand(() -> m_driveTrain.arcadeDrive(0, 0)),
+
+            new ParallelDeadlineGroup( //Drive Forward
+                new WaitCommand(1.4),
+                new DeployControl(m_deploy, -0.3),
+                new InstantCommand(() -> m_driveTrain.arcadeDrive(-0.7, 0))
+            ),
+            
+            new InstantCommand(() -> m_driveTrain.arcadeDrive(0, 0)),
+
+            new ParallelDeadlineGroup( //Last Shoot
+                new WaitCommand(5),
+                new Shoot(m_Shooter, 0.4)
+            )
+
+        );
+    }
     
-
-    this.s_Intake = s_Intake;
-
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-
-    addRequirements(s_Intake);
-    addRequirements(m_driveTrain);
-
-    myStartTime = System.currentTimeMillis();
-    System.out.println("MyStartTime" +myStartTime);
-    myTime = 0.0;
-  }
-
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-
-  myTime = (System.currentTimeMillis() -myStartTime)/1000;
-
-  while (myTime<= 5) { 
-      
- m_driveTrain.arcadeDrive(0, 0);
-
 }
 
 
-  while (myTime<= 6.4) { 
-
-  s_Intake.setPower(0.4);
-  
- m_driveTrain.arcadeDrive(0.7, 0);
-
-}
-
-  m_driveTrain.arcadeDrive(0,0);
 
 
-while (myTime<= 7.05) { 
-  
- m_driveTrain.arcadeDrive(0, 0.7);
-
-
-}
-
-  while (myTime<= 7.9) { 
-
-
-  m_driveTrain.arcadeDrive(-0.7, 0);
-
-}
-
-  m_driveTrain.arcadeDrive(0,0);
-
-
-while (myTime<= 8.67) { 
-  
-
-
- m_driveTrain.arcadeDrive(0.7, 0);
-
-}
-
-while (myTime<= 9.42) { 
-
-  s_Intake.setPower(0);
-  
- m_driveTrain.arcadeDrive(0, -0.7);
-
-}
-
-while (myTime<= 10.82) { 
-  
- m_driveTrain.arcadeDrive(-0.7, 0);
-
-}
-
-while (myTime<= 15) { 
-  
- m_driveTrain.arcadeDrive(0, 0);
-
-}
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
-}

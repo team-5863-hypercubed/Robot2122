@@ -10,11 +10,11 @@ public class Shooter extends SubsystemBase {
 
     public Shooter() {
         shootMotor = new VictorSP(5);
-        shootMotor2 = new VictorSP(6);
+        shootMotor2 = new VictorSP(4);
     }
 
     public void setPower(double power) {
-        shootMotor.set(power); //theoretically clockwise
+        shootMotor.set(-power); //theoretically clockwise
         shootMotor2.set(-power);//theoretically counterclockwise
     }
 

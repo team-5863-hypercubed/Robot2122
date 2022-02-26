@@ -23,8 +23,9 @@ public class DriveTrain extends SubsystemBase {
         rightBackMotor = new Spark(Constants.Drivetrain.rightSparkPwm);
         rightFrontMotor.setInverted(true);
         rightBackMotor.setInverted(true);
-        rightFrontMotor.setNeutralMode(NeutralMode.Brake);
-        leftFrontMotor.setNeutralMode(NeutralMode.Brake);
+    
+       // rightFrontMotor.setNeutralMode(NeutralMode.Brake);
+       // leftFrontMotor.setNeutralMode(NeutralMode.Brake);
         //Creates objects containing movement motors. Here, the motors are grouped by the side of the robot they occupy.
         MotorControllerGroup leftSide = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
         MotorControllerGroup rightSide = new MotorControllerGroup(rightFrontMotor, rightBackMotor);

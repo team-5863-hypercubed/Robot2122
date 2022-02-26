@@ -31,7 +31,7 @@ public final class Constants {
     }
 
     public static final class Deployer {
-        public static final int deployVictorSPPwm = 4;
+        public static final int deploySparkPwm = 6;
     }
     
 
