@@ -1,0 +1,21 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/ClimbMotor": "Subsystem",
+      "/LiveWindow/Deploy": "Subsystem",
+      "/LiveWindow/DriveTrain": "Subsystem",
+      "/LiveWindow/Intake": "Subsystem",
+      "/LiveWindow/Shooter": "Subsystem",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/DigitalInput[0]": "Digital Input",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/Spark[2]": "Motor Controller",
+      "/LiveWindow/Ungrouped/VictorSP[3]": "Motor Controller",
+      "/LiveWindow/Ungrouped/VictorSP[4]": "Motor Controller",
+      "/LiveWindow/Ungrouped/VictorSP[5]": "Motor Controller",
+      "/LiveWindow/Ungrouped/VictorSP[6]": "Motor Controller",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    }
+  }
+}
