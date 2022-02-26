@@ -29,7 +29,9 @@ public class RobotContainer {
     private final int climbSpeed = XboxController.Axis.kLeftY.value;
     private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kB.value);
     private final JoystickButton shooterButton = new JoystickButton(operator, XboxController.Button.kA.value);
-    private final int deploySpeed = XboxController.Axis.kRightY.value;
+    private final JoystickButton deployButton = new JoystickButton(operator, XboxController.Button.kX.value);
+    private final JoystickButton deployButton2 = new JoystickButton(operator, XboxController.Button.kY.value);
+    //private final int deploySpeed = XboxController.Axis.kRightY.value;
 
     /* Subsystems */
     private final DriveTrain m_driveTrain = new DriveTrain();
@@ -47,8 +49,8 @@ public class RobotContainer {
         m_driveTrain.setDefaultCommand(
             new TeleOPDrive(
                 m_driveTrain,
-                () -> -driver.getRawAxis(drivetrainSpeed),
-                () -> -driver.getRawAxis(drivetrainRotation)
+                () -> driver.getRawAxis(drivetrainSpeed),
+                () -> driver.getRawAxis(drivetrainRotation)
             )
         );
 
@@ -59,16 +61,16 @@ public class RobotContainer {
             )
         );
 
-        m_deploy.setDefaultCommand(
+        /*m_deploy.setDefaultCommand(
             new DeployControl(
                 m_deploy,
                 () -> operator.getRawAxis(deploySpeed)
             )
-        );
+        );*/
 
         /* Configure autos in sendable chooser */
-        autoChooser.setDefaultOption("DownRedUpBlue", new DownRedUpBlueAuto(m_driveTrain, m_Shooter, m_Intake));
-        autoChooser.addOption("UpRedDownBlueAuto", new UpRedDownBlueAuto(m_driveTrain, m_Intake));
+        autoChooser.setDefaultOption("DownRedUpBlue", new DownRedUpBlueAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
+        autoChooser.addOption("UpRedDownBlueAuto", new UpRedDownBlueAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
         SmartDashboard.putData(autoChooser);
 
         // Configure the button bindings
@@ -77,7 +79,9 @@ public class RobotContainer {
     
     private void configureButtonBindings() {
         intakeButton.whileHeld(new IntakeControl(m_Intake, 0.32));
-        shooterButton.whileHeld(new Shoot(m_Shooter, 0.3));
+        shooterButton.whileHeld(new Shoot(m_Shooter, 0.8));
+        deployButton.whileHeld(new DeployControl(m_deploy, 0.3));
+        deployButton2.whileHeld(new DeployControl(m_deploy, -0.3));
     }
 
     /**
