@@ -46,13 +46,13 @@ public class RobotContainer {
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        m_driveTrain.setDefaultCommand(
-            new TeleOPDrive(
-                m_driveTrain,
-                () -> driver.getRawAxis(drivetrainSpeed),
-                () -> driver.getRawAxis(drivetrainRotation)
-            )
-        );
+        // m_driveTrain.setDefaultCommand(
+        //     new TeleOPDrive(
+        //         m_driveTrain,
+        //         () -> driver.getRawAxis(drivetrainSpeed),
+        //         () -> driver.getRawAxis(drivetrainRotation)
+        //     )
+        // );
 
         m_climber.setDefaultCommand(
             new Climb(
