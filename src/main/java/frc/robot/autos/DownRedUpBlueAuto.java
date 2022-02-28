@@ -24,25 +24,25 @@ public class DownRedUpBlueAuto extends SequentialCommandGroup {
             new ParallelDeadlineGroup( //Drive Backwards
                 new WaitCommand(1.4),
                 new DriveCommand(m_driveTrain, 0.7, 0),
-                new IntakeControl(m_Intake, 0.2)
+                new IntakeControl(m_Intake, 0.3)
             ),
 
             new ParallelDeadlineGroup( // Rotate CCW
                 new WaitCommand(0.65),
-                new IntakeControl(m_Intake, 0.2),
+                new IntakeControl(m_Intake, 0.3),
                 new DriveCommand(m_driveTrain, 0.0, -0.7)
             ),
 
             new ParallelDeadlineGroup( //Drive Forward
                 new WaitCommand(0.85),
-                new IntakeControl(m_Intake, 0.2),
+                new IntakeControl(m_Intake, 0.3),
                 new DriveCommand(m_driveTrain, -0.7, 0)
             ),
 
             new ParallelDeadlineGroup( //Drive Backwards
                 new WaitCommand(0.77),
                 new DriveCommand(m_driveTrain, 0.7, 0.0),
-                new IntakeControl(m_Intake, 0.2)
+                new IntakeControl(m_Intake, 0.3)
               
             ),
 
