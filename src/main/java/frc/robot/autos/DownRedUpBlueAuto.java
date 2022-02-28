@@ -18,52 +18,47 @@ public class DownRedUpBlueAuto extends SequentialCommandGroup {
         addCommands(
             new ParallelDeadlineGroup( //Last Shoot
                 new WaitCommand(5),
-                new Shoot(m_Shooter, 0.1)
+                new Shoot(m_Shooter, 0.4)
             ),
 
             new ParallelDeadlineGroup( //Drive Backwards
                 new WaitCommand(1.4),
-                new DriveCommand(m_driveTrain, () -> 0.7, () -> 0.0),
-                new IntakeControl(m_Intake, 0.3)
+                new DriveCommand(m_driveTrain, () -> 0.7, () ->  0),
+                new IntakeControl(m_Intake, 0.2)
             ),
-            new DriveCommand(m_driveTrain, () -> 0, () -> 0),
 
             new ParallelDeadlineGroup( // Rotate CCW
-                new WaitCommand(0.65),
-                new IntakeControl(m_Intake, 0.3),
+                new WaitCommand(0.62),
+                new IntakeControl(m_Intake, 0.2),
                 new DriveCommand(m_driveTrain, () -> 0.0, () -> -0.7)
             ),
-            new DriveCommand(m_driveTrain, () -> 0, () -> 0),
 
             new ParallelDeadlineGroup( //Drive Forward
-                new WaitCommand(0.85),
-                new IntakeControl(m_Intake, 0.3),
-                new DriveCommand(m_driveTrain, () -> -0.7, () -> 0)
+                new WaitCommand(0.9),
+                new IntakeControl(m_Intake, 0.2),
+                new DriveCommand(m_driveTrain, () -> -0.7,() ->  0)
             ),
-            new DriveCommand(m_driveTrain, () -> 0, () -> 0),
 
             new ParallelDeadlineGroup( //Drive Backwards
-                new WaitCommand(0.77),
-                new DriveCommand(m_driveTrain, () -> 0.7, () -> 0.0),
-                new IntakeControl(m_Intake, 0.3)
+                new WaitCommand(0.82),
+                new DriveCommand(m_driveTrain, () -> 0.7,() ->  0.0),
+                new IntakeControl(m_Intake, 0.2)
+              
             ),
-            new DriveCommand(m_driveTrain, () -> 0, () -> 0),
 
             new ParallelDeadlineGroup( //Rotate CW
-                new WaitCommand(0.65),
-                new DriveCommand(m_driveTrain, () -> 0.0, () -> -0.7)
+                new WaitCommand(0.62),
+                new DriveCommand(m_driveTrain, () -> 0.0,() ->  -0.7)
             ),
-            new DriveCommand(m_driveTrain, () -> 0, () -> 0),
 
             new ParallelDeadlineGroup( //Drive Forward
                 new WaitCommand(1.4),
-                new DriveCommand(m_driveTrain, () -> -0.7, () -> 0)
+                new DriveCommand(m_driveTrain, () -> -0.7,() ->  0)
             ),
-            new DriveCommand(m_driveTrain, () -> 0, () -> 0),
 
             new ParallelDeadlineGroup( //Last Shoot
                 new WaitCommand(5),
-                new Shoot(m_Shooter, 0.1)
+                new Shoot(m_Shooter, 0.4)
             )
             
         );
