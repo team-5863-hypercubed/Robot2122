@@ -16,8 +16,6 @@ public class TeleOPDrive extends CommandBase {
     private DoubleSupplier speed;
     private DoubleSupplier rotation;
 
-    DigitalInput driveLimit = new DigitalInput(Constants.Drivetrain.limitDriveSwitchDIO);
-
     public TeleOPDrive(DriveTrain m_driveTrain, DoubleSupplier speed, DoubleSupplier rotation) {
         this.m_driveTrain = m_driveTrain;
         addRequirements(m_driveTrain);
