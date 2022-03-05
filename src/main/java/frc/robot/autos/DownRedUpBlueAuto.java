@@ -3,6 +3,7 @@ package frc.robot.autos;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.DeployControl;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeControl;
 import frc.robot.commands.Shoot;
@@ -18,43 +19,57 @@ public class DownRedUpBlueAuto extends SequentialCommandGroup {
         addCommands(
             new ParallelDeadlineGroup( //Last Shoot
                 new WaitCommand(5),
-                new Shoot(m_Shooter, 0.4)
+                new Shoot(m_Shooter, 0.7)
             ),
 
             new ParallelDeadlineGroup( //Drive Backwards
                 new WaitCommand(1.4),
                 new DriveCommand(m_driveTrain, () -> 0.7, () ->  0),
-                new IntakeControl(m_Intake, 0.2)
+                new IntakeControl(m_Intake, 0.5)
             ),
 
             new ParallelDeadlineGroup( // Rotate CCW
-                new WaitCommand(0.62),
-                new IntakeControl(m_Intake, 0.2),
+                new WaitCommand(0.61),
+                new IntakeControl(m_Intake, 0.5),
                 new DriveCommand(m_driveTrain, () -> 0.0, () -> -0.7)
             ),
 
             new ParallelDeadlineGroup( //Drive Forward
                 new WaitCommand(0.9),
-                new IntakeControl(m_Intake, 0.2),
+                new IntakeControl(m_Intake, 0.5),
                 new DriveCommand(m_driveTrain, () -> -0.7,() ->  0)
             ),
 
+            new ParallelDeadlineGroup( //Stops for Robot's safety
+                new WaitCommand(2.5),
+                new DriveCommand(m_driveTrain, () -> 0, () -> 0),
+                new DeployControl(m_deploy, -0.7)
+            ),
+            
             new ParallelDeadlineGroup( //Drive Backwards
-                new WaitCommand(0.82),
+                new WaitCommand(0.9),
                 new DriveCommand(m_driveTrain, () -> 0.7,() ->  0.0),
-                new IntakeControl(m_Intake, 0.2)
+                new IntakeControl(m_Intake, 0.5)
               
             ),
 
             new ParallelDeadlineGroup( //Rotate CW
-                new WaitCommand(0.62),
-                new DriveCommand(m_driveTrain, () -> 0.0,() ->  -0.7)
+                new WaitCommand(0.636),
+                new DriveCommand(m_driveTrain, () -> 0.0,() ->  0.7)
+            ),
+
+            new ParallelDeadlineGroup( //Stops for Robot's safety
+                new WaitCommand(3),
+                new DriveCommand(m_driveTrain, () -> 0, () -> 0),
+                new DeployControl(m_deploy, 0.7)
             ),
 
             new ParallelDeadlineGroup( //Drive Forward
-                new WaitCommand(1.4),
+                new WaitCommand(1.258),
                 new DriveCommand(m_driveTrain, () -> -0.7,() ->  0)
             ),
+            
+            new DriveCommand(m_driveTrain, () -> 0, () -> 0),
 
             new ParallelDeadlineGroup( //Last Shoot
                 new WaitCommand(5),

@@ -22,7 +22,7 @@ public final class Constants {
         public static final int leftTaloniD = 0; //PDP 3
         public static final int rightTaloniD = 1; //PDP 13
 
-        public static final int limitDriveSwitchDIO = 0;
+        
     }
 
     public static final class Climber {
@@ -32,6 +32,7 @@ public final class Constants {
 
     public static final class Deployer {
         public static final int deploySparkPwm = 6;
+        
     }
     
 

@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.autos.DownRedUpBlueAuto;
+import frc.robot.autos.TwoBallAuto;
 import frc.robot.autos.UpRedDownBlueAuto;
 import frc.robot.commands.Climb;
 import frc.robot.commands.TeleOPDrive;
@@ -43,6 +44,9 @@ public class RobotContainer {
 
     /* Auto Chooser */
     SendableChooser<Command> autoChooser = new SendableChooser<>();
+
+    /* SmartDashboard*/
+
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -70,7 +74,8 @@ public class RobotContainer {
 
         /* Configure autos in sendable chooser */
         autoChooser.setDefaultOption("DownRedUpBlue", new DownRedUpBlueAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
-        autoChooser.addOption("UpRedDownBlueAuto", new UpRedDownBlueAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
+        autoChooser.addOption("UpRedDownBlue", new UpRedDownBlueAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
+        autoChooser.addOption("TwoBallAuto", new TwoBallAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
         SmartDashboard.putData(autoChooser);
 
         // Configure the button bindings
@@ -79,9 +84,9 @@ public class RobotContainer {
     
     private void configureButtonBindings() {
         intakeButton.whileHeld(new IntakeControl(m_Intake, 0.32));
-        shooterButton.whileHeld(new Shoot(m_Shooter, 0.8));
-        deployButton.whileHeld(new DeployControl(m_deploy, 0.3));
-        deployButton2.whileHeld(new DeployControl(m_deploy, -0.3));
+        shooterButton.whileHeld(new Shoot(m_Shooter, 0.9));
+        deployButton.whileHeld(new DeployControl(m_deploy, -0.5));
+        deployButton2.whileHeld(new DeployControl(m_deploy, 0.5));
     }
 
     /**

@@ -16,11 +16,7 @@ public class Deploy extends SubsystemBase {
         deployMotor.set(speed);
 
     }
-
-    public void lowerDeploy(double speed) {
-        deployMotor.set(-speed);
-
-    }
+    
 
     @Override
     public void periodic() {

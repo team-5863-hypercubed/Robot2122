@@ -11,7 +11,7 @@ public class ClimbMotor extends SubsystemBase {
     }
 
     public void armRaise(double speed) {
-        armMotor.set(speed);
+        armMotor.set(-speed);
     }
 
     @Override

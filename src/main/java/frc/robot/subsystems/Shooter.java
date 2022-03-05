@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase {
 
     public void setPower(double power) {
         shootMotor.set(-power); //theoretically clockwise
-        shootMotor2.set(-power);//theoretically counterclockwise
+        shootMotor2.set(power);//theoretically counterclockwise
     }
 
     @Override
