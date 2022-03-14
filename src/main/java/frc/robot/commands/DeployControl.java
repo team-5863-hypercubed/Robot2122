@@ -1,8 +1,6 @@
 package frc.robot.commands;
-import frc.robot.Constants;
 import frc.robot.subsystems.Deploy;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.*;
+
 
 //import java.util.function.DoubleSupplier;
 
@@ -14,33 +12,52 @@ public class DeployControl extends CommandBase {
     //DoubleSupplier deploySpeed;
 
     Double speed;
-    DigitalInput deployLimit = new DigitalInput(0);
-
  
     public DeployControl(Deploy m_deploy, Double speed){    
         this.m_deploy = m_deploy;
         this.speed = speed;
-        addRequirements(m_deploy);
-
-
-        
+        addRequirements(m_deploy); 
         //this.deploySpeed = deploySpeed;
-    }
+
+     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //m_deploy.armDeploy(deploySpeed.getAsDouble()); 
-        if(deployLimit.get() == true)   {
-            m_deploy.armDeploy(0);
+
+        //m_deploy.armDeploy(speed);
+
+    
+       if(Deploy.deployLimit.get() == true){
+            m_deploy.armDeploy(speed);
+            //Deploy.initializeCounter();
         }
-        m_deploy.armDeploy(speed);
+        if(Deploy.deployLimit.get() == false){
+            m_deploy.armDeploy(0);
 
-        SmartDashboard.putBoolean("DeployLimit", deployLimit.get());
-
-
-
+            
+            //Deploy.initializeCounter();
     }
+        if(Deploy.deployLimit.get() == false) {
+            m_deploy.armDeploy(0.5);
+        }
+}
+    
+        //m_deploy.armDeploy(deploySpeed.getAsDouble()); 
+
+      /*  while(Deploy.deployLimit.get()) {
+            m_deploy.armDeploy(0);
+        }*/
+        //SmartDashboard.putBoolean("DeployLimit", Deploy.deployLimit.get());
+
+
+
+
+   /* @Override
+    public boolean isFinished(){
+        return Deploy.isSwitchSet();
+    }*/
+
 
     @Override
     public void end(boolean interrupted){

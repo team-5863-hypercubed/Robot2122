@@ -12,12 +12,9 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Deploy;
 
-public class TwoBallAuto extends SequentialCommandGroup {
+public class OneBallAuto extends SequentialCommandGroup {
 
-    public TwoBallAuto(DriveTrain m_driveTrain, Shooter m_Shooter, Intake m_Intake, Deploy m_deploy) {
-
-
-        //Temporary
+    public OneBallAuto(DriveTrain m_driveTrain, Shooter m_Shooter, Intake m_Intake, Deploy m_deploy) {
 
         addCommands(
             new ParallelDeadlineGroup( //First Shoot
@@ -30,9 +27,9 @@ public class TwoBallAuto extends SequentialCommandGroup {
                 new DriveCommand(m_driveTrain, () -> 0.7, () ->  0)
             ),
 
-            new ParallelDeadlineGroup( // Rotate CW
-                new WaitCommand(0.84),
-                new DriveCommand(m_driveTrain, () -> 0.0, () -> 0.7)
+            new ParallelDeadlineGroup( // Rotate CCW
+                new WaitCommand(0.82),
+                new DriveCommand(m_driveTrain, () -> 0.0, () -> -0.7)
             ),
 
             new ParallelDeadlineGroup( //Stops for Robot's safety
@@ -43,35 +40,21 @@ public class TwoBallAuto extends SequentialCommandGroup {
 
             new ParallelDeadlineGroup( //Drive Forward
                 new WaitCommand(1.2),
-                new IntakeControl(m_Intake, -0.7),
-                new DriveCommand(m_driveTrain, () -> -0.7,() ->  0),
-                new Shoot(m_Shooter, 0.5),
-                new DeployControl(m_deploy, -0.6)
-            ),         
-
-            new ParallelDeadlineGroup( //Rotate CW
-                new WaitCommand(0.78),
-                new DriveCommand(m_driveTrain, () -> 0.0,() ->  0.7)
-            ),
-
-            new ParallelDeadlineGroup( //Drive Forward
-                new WaitCommand(2),
-                new IntakeControl(m_Intake, -0.7),
+                new IntakeControl(m_Intake, -0.8),
                 new DriveCommand(m_driveTrain, () -> -0.7,() ->  0),
                 new Shoot(m_Shooter, 0.5),
                 new DeployControl(m_deploy, -0.6)
             ),
 
-            new ParallelDeadlineGroup(  //Rotate CW
-                new WaitCommand(0.65),
-                new DriveCommand(m_driveTrain, () -> 0.0,() ->  0.7)
-              
+            new ParallelDeadlineGroup( // Rotate CW
+                new WaitCommand(0.88),
+                new DriveCommand(m_driveTrain, () -> 0.0, () -> 0.7)
             ),
 
             new ParallelDeadlineGroup( //Last Shoot
-                new WaitCommand(2),
-                new DriveCommand(m_driveTrain, () -> 0,() ->  0),
-                new Shoot(m_Shooter, 0.85)
+                new WaitCommand(1.5),
+                new DriveCommand(m_driveTrain, () -> 0, () ->  0),
+                new Shoot(m_Shooter, 0.9)
             )
             
         );
