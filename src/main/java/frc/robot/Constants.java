@@ -16,12 +16,11 @@ public final class Constants {
     //testing25
 
     public static final class Drivetrain {
-        public static final int leftSparkPwm = 0; //PDP 14
-        public static final int rightSparkPwm = 1; //PDP 12
+        public static final int leftTalonPwm = 2; //PDP 14
+        public static final int rightTalonPwm = 3; //PDP 12
 
         public static final int leftTaloniD = 0; //PDP 3
         public static final int rightTaloniD = 1; //PDP 13
-
         
     }
 

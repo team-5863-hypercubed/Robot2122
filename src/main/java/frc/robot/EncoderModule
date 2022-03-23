@@ -1,0 +1,61 @@
+package frc.robot;
+
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.DriveTrain;
+
+
+public class EncoderModule {
+
+    private static final double kWheelRadius = 3;
+    private static final int kEncoderResolution = 4096;
+
+    public final Encoder m_driveEncoder;
+    public final Encoder m_turningEncoder;
+
+
+     /**
+   * Constructs a SwerveModule with a drive motor, turning motor, drive encoder and turning encoder.
+   *
+   * @param driveEncoderChannelA DIO input for the drive encoder channel A
+   * @param driveEncoderChannelB DIO input for the drive encoder channel B
+   * @param turningEncoderChannelA DIO input for the turning encoder channel A
+   * @param turningEncoderChannelB DIO input for the turning encoder channel B
+   */
+
+   public EncoderModule(
+
+    int driveEncoderChannelA,
+    int driveEncoderChannelB,
+    int turningEncoderChannelA,
+    int turningEncoderChannelB) {
+
+        m_driveEncoder = new Encoder(driveEncoderChannelA, driveEncoderChannelB);
+        m_turningEncoder = new Encoder(turningEncoderChannelA, turningEncoderChannelB);
+
+        m_driveEncoder.setDistancePerPulse(2 * Math.PI * kWheelRadius / kEncoderResolution);
+
+
+        // the angle through an entire rotation (2 * pi) divided by the encoder resolution.
+        m_turningEncoder.setDistancePerPulse(2 * Math.PI / kEncoderResolution);
+    }
+
+    public void Data(){
+
+        SmartDashboard.putData(m_turningEncoder);
+        SmartDashboard.putData(m_driveEncoder);
+
+    }
+
+
+}
+
+    /**
+   * Returns the current state of the module.
+   *
+   * @return The current state of the module.
+   */
+
+

@@ -19,17 +19,12 @@ public class OneBallAuto2 extends SequentialCommandGroup {
         addCommands(
             new ParallelDeadlineGroup( //First Shoot
                 new WaitCommand(1.5),
-                new Shoot(m_Shooter, 0.9)
+                new Shoot(m_Shooter, 0.62)
             ),
-
-            new ParallelDeadlineGroup( //Drive Backwards
-                new WaitCommand(0.7),
-                new DriveCommand(m_driveTrain, () -> 0.7, () ->  0)
-            ),
-
-            new ParallelDeadlineGroup( // Rotate CW
-                new WaitCommand(0.97),
-                new DriveCommand(m_driveTrain, () -> 0.0, () -> 0.7)
+    
+            new ParallelDeadlineGroup( // Rotate CCW
+                new WaitCommand(1.24),
+                new DriveCommand(m_driveTrain, () -> 0.0, () -> -0.7)
             ),
 
             new ParallelDeadlineGroup( //Stops for Robot's safety
@@ -39,32 +34,33 @@ public class OneBallAuto2 extends SequentialCommandGroup {
             ),
 
             new ParallelDeadlineGroup( //Drive Forward
-                new WaitCommand(0.87),
-                new IntakeControl(m_Intake, 0.4),
-                new DriveCommand(m_driveTrain, () -> -0.7,() ->  0)
+                new WaitCommand(1.55),
+                new IntakeControl(m_Intake, -0.7),
+                new DriveCommand(m_driveTrain, () -> -0.7,() ->  0),
+                new Shoot(m_Shooter, 0.3)
             ),
 
-            new ParallelDeadlineGroup( //Drive Backwards
-                new WaitCommand(0.87),
-                new DriveCommand(m_driveTrain, () -> 0.7, () ->  0)
+            new ParallelDeadlineGroup( //Stops for Robot's safety
+                new WaitCommand(1),
+                new DriveCommand(m_driveTrain, () -> 0,() ->  0)
             ),
 
-            new ParallelDeadlineGroup( // Rotate CCW
-                new WaitCommand(0.97),
-                new DriveCommand(m_driveTrain, () -> 0.0, () -> -0.7)
+
+            new ParallelDeadlineGroup( // Rotate CW
+                new WaitCommand(1.2),
+                new DriveCommand(m_driveTrain, () -> 0.0, () -> 0.7)
+            ),
+
+            new ParallelDeadlineGroup( //Stops for Robot's safety
+                new WaitCommand(0.5),
+                new DriveCommand(m_driveTrain, () -> 0,() ->  0)
             ),
 
             new ParallelDeadlineGroup( //Last Shoot
-                new WaitCommand(1.5),
-                new DriveCommand(m_driveTrain, () -> 0, () ->  0),
+                new WaitCommand(0.9),
                 new Shoot(m_Shooter, 0.9)
             )
-            
+
         );
     }
-    
 }
-
-
-
-
