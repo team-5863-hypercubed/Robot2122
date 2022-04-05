@@ -5,10 +5,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DeployControl;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.IntakeControl;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Deploy;
 
@@ -19,7 +17,7 @@ public class OklaAuton extends SequentialCommandGroup {
         addCommands(
             new ParallelDeadlineGroup( //First Shoot
                 new WaitCommand(1.5),
-                new Shoot(m_Shooter, 0.62)
+                new Shoot(m_Shooter, 0.95)
             ),
 
             new ParallelDeadlineGroup( //Drive Backwards

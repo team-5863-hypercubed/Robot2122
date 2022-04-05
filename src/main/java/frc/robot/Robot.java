@@ -6,10 +6,26 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.Drivetrain;
+import frc.robot.commands.TeleOPDrive;
+import frc.robot.subsystems.DriveTrain;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.cameraserver.CameraServer;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+
+
+
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -34,9 +50,10 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     CameraServer.startAutomaticCapture(0);
     CameraServer.startAutomaticCapture(1);
-
-
     
+    //DriveTrain.rightBackEncMotor.setSelectedSensorPosition(0,0,10);
+   // DriveTrain.leftFrontEncMotor.setSelectedSensorPosition(0,0,10);
+
     
     }
 
@@ -54,12 +71,19 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    
 
+  /*  SmartDashboard.putNumber("Left Drive Encoder Value", DriveTrain.leftFrontEncMotor.getSelectedSensorPosition()* DriveTrain.kDriveTick2Feet);
+
+    SmartDashboard.putNumber("Right Drive Encoder Value", DriveTrain.rightBackEncMotor.getSelectedSensorPosition()* DriveTrain.kDriveTick2Feet);
+*/
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    //DriveTrain.enableMotors(false);
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -67,17 +91,38 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+   // DriveTrain.enableMotors(true);
 
+    //DriveTrain.rightBackEncMotor.setSelectedSensorPosition(0,0,10);
+   // DriveTrain.leftFrontEncMotor.setSelectedSensorPosition(0,0,10);
+
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
   }
 
+
+    //PhysicsSim.getInstance().addTalonSRX(m_tal, 1, 0.2);
+    //PhysicsSim.getInstance().addTalonSRX(m_tal2, 1, 0.2);
+  
+  
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+
+  /* double leftPosition = DriveTrain.leftFrontEncMotor.getSelectedSensorPosition() * DriveTrain.kDriveTick2Feet;
+    double rightPosition = DriveTrain.rightBackEncMotor.getSelectedSensorPosition() * DriveTrain.kDriveTick2Feet;
+
+    double distance = (leftPosition+rightPosition) / 2;
+
+    if(distance < 10) {
+      DriveTrain.arcadeDrive(0.3, 0.3);
+    }else {
+      DriveTrain.arcadeDrive(0,0);
+    }*/
+  }
 
   @Override
   public void teleopInit() {
@@ -87,20 +132,34 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+
+
     }
-  }
+
+ }
+
+
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
 
-  @Override
+  
+	
+  }
+
+  
+
+  
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }
 
   /** This function is called periodically during test mode. */
-  @Override
+  
   public void testPeriodic() {}
+
+  
 }
+

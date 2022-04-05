@@ -14,14 +14,19 @@ package frc.robot;
  */
 public final class Constants {
     //testing25
-
+    
     public static final class Drivetrain {
-        public static final int leftTalonPwm = 2; //PDP 14
-        public static final int rightTalonPwm = 3; //PDP 12
+        public static final int leftFrontTaloniD = 1; //PDP 14
+        public static final int rightFrontTaloniD = 4; //PDP 12
 
-        public static final int leftTaloniD = 0; //PDP 3
-        public static final int rightTaloniD = 1; //PDP 13
+        public static final int leftBackTaloniD = 0; //PDP 3
+        public static final int rightBackTaloniD = 3; //PDP 13
         
+    }
+
+    public static final class Encoder {
+        public static final int leftEncoder = 0;
+        public static final int rightEncoder = 1;
     }
 
     public static final class Climber {

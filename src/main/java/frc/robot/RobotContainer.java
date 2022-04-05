@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.autos.OneBallAuto;
-import frc.robot.autos.EncoderAuto;
+//import frc.robot.autos.EncoderAuto;
 import frc.robot.autos.OklaAuton;
+import frc.robot.autos.BayouAuton;
 import frc.robot.autos.TwoBallAuto;
-import frc.robot.autos.OneBallAuto2;
 import frc.robot.commands.Climb;
 import frc.robot.commands.TeleOPDrive;
 import frc.robot.commands.Shoot;
@@ -31,20 +31,21 @@ public class RobotContainer {
     /* Operator Controls */
     private final int climbSpeed = XboxController.Axis.kLeftY.value;
     private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kA.value);
-    private final JoystickButton shooterButton = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton reverseshooterButton = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
     private final JoystickButton shooterButton2 = new JoystickButton(operator, XboxController.Button.kB.value);
-    //private final JoystickButton shooterButton3 = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton reverseintakeButton = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final JoystickButton deployButton = new JoystickButton(operator, XboxController.Button.kX.value);
     private final JoystickButton deployButton2 = new JoystickButton(operator, XboxController.Button.kY.value);
     //private final int deploySpeed = XboxController.Axis.kRightY.value;
 
     /* Subsystems */
-    private final DriveTrain m_driveTrain = new DriveTrain();
+    public static DriveTrain m_driveTrain = new DriveTrain();
+    private final DriveTrain m_autodriveTrain = new DriveTrain();
     private final ClimbMotor m_climber = new ClimbMotor();
     private final Intake m_Intake = new Intake();
     private final Shooter m_Shooter = new Shooter();
     private final Deploy m_deploy = new Deploy();
-
+    //private final Encoders m_encoders = new Encoders();
 
     /* Auto Chooser */
     SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -81,8 +82,8 @@ public class RobotContainer {
 
         /* Configure autos in sendable chooser */
         autoChooser.setDefaultOption("OneBallAuto", new OneBallAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
-        autoChooser.addOption("OneBallAuto2", new OneBallAuto2(m_driveTrain, m_Shooter, m_Intake, m_deploy));
         autoChooser.addOption("TwoBallAuto", new TwoBallAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
+        autoChooser.addOption("BayouAuto", new BayouAuton(m_driveTrain, m_Shooter, m_deploy, m_Intake));
         autoChooser.addOption("OklaAuton", new OklaAuton(m_driveTrain, m_Shooter, m_deploy));
       //  autoChooser.addOption("EncoderAuto", new EncoderAuto(m_driveTrain));
         SmartDashboard.putData(autoChooser);
@@ -92,12 +93,12 @@ public class RobotContainer {
     }
     
     private void configureButtonBindings() {
-        intakeButton.whileHeld(new IntakeControl(m_Intake, -0.60));
-        shooterButton.whileHeld(new Shoot(m_Shooter, 0.30));
-        shooterButton2.whileHeld(new Shoot(m_Shooter, 0.65));
-        //shooterButton3.whileHeld(new Shoot(m_Shooter, 0.8));
+        intakeButton.whileHeld(new IntakeControl(m_Intake, 0.55));
+        reverseshooterButton.whileHeld(new Shoot(m_Shooter, -0.75));
+        shooterButton2.whileHeld(new Shoot(m_Shooter, 0.95));
         deployButton.whileHeld(new DeployControl(m_deploy, -0.7));
-        deployButton2.whileHeld(new DeployControl(m_deploy, 0.7));
+        deployButton2.whileHeld(new DeployControl(m_deploy, 0.85));
+        reverseintakeButton.whileHeld(new IntakeControl(m_Intake, 0.55));
     }
 
     /**
@@ -106,6 +107,6 @@ public class RobotContainer {
      * @return the coimmand to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+       return autoChooser.getSelected();
     }
 }
