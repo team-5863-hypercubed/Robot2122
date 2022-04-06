@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
@@ -44,6 +46,7 @@ public class RobotContainer {
     private final Intake m_Intake = new Intake();
     private final Shooter m_Shooter = new Shooter();
     private final Deploy m_deploy = new Deploy();
+    private final EncoderDrive m_encoderDrive = new EncoderDrive();
 
 
     /* Auto Chooser */
@@ -53,7 +56,8 @@ public class RobotContainer {
    // public static CameraInput m_cameraInput;
 
    /* Misc */
-
+    private final TalonSRX RightRearEncoder = new TalonSRX(3);
+    //private final double encoderValue = RightRearEncoder.getSelectedSensorPosition();
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -72,12 +76,12 @@ public class RobotContainer {
             )
         );
         
-        /*m_deploy.setDefaultCommand(
-            new DeployControl(
-                m_deploy,
-                () -> operator.getRawAxis(deploySpeed)
-            )
-        );*/
+        //m_encoderDrive.setDefaultCommand(
+            new EncoderAuto(
+                m_driveTrain,
+                () -> RightRearEncoder.getSelectedSensorPosition()/4096
+            
+        );
 
         /* Configure autos in sendable chooser */
         autoChooser.setDefaultOption("OneBallAuto", new OneBallAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
