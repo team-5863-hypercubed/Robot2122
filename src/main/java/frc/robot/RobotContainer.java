@@ -1,5 +1,9 @@
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
+import javax.swing.text.Position;
+
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -88,7 +92,7 @@ public class RobotContainer {
         autoChooser.addOption("OneBallAuto2", new OneBallAuto2(m_driveTrain, m_Shooter, m_Intake, m_deploy));
         autoChooser.addOption("TwoBallAuto", new TwoBallAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
         autoChooser.addOption("OklaAuton", new OklaAuton(m_driveTrain, m_Shooter, m_deploy));
-      //  autoChooser.addOption("EncoderAuto", new EncoderAuto(m_driveTrain));
+        autoChooser.addOption("EncoderAuto", new EncoderAuto(m_driveTrain, null));
         SmartDashboard.putData(autoChooser);
 
         // Configure the button bindings
