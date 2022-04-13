@@ -10,6 +10,7 @@ import frc.robot.autos.OneBallAuto;
 //import frc.robot.autos.EncoderAuto;
 import frc.robot.autos.OklaAuton;
 import frc.robot.autos.BayouAuton;
+//import frc.robot.autos.LimelightAuto;
 import frc.robot.autos.TwoBallAuto;
 import frc.robot.commands.Climb;
 import frc.robot.commands.TeleOPDrive;
@@ -17,6 +18,7 @@ import frc.robot.commands.Shoot;
 import frc.robot.commands.DeployControl;
 import frc.robot.subsystems.*;
 import frc.robot.commands.IntakeControl;
+import frc.robot.commands.LimeDrive;
 
 
 public class RobotContainer {
@@ -27,6 +29,7 @@ public class RobotContainer {
     /* Driver Controls */
     private final int drivetrainSpeed = XboxController.Axis.kLeftY.value;
     private final int drivetrainRotation = XboxController.Axis.kLeftX.value;
+    private final JoystickButton limeLightButton = new JoystickButton(driver, XboxController.Button.kX.value);
 
     /* Operator Controls */
     private final int climbSpeed = XboxController.Axis.kLeftY.value;
@@ -45,6 +48,7 @@ public class RobotContainer {
     private final Intake m_Intake = new Intake();
     private final Shooter m_Shooter = new Shooter();
     private final Deploy m_deploy = new Deploy();
+    private final limeMaster m_limelight = new limeMaster();
     //private final Encoders m_encoders = new Encoders();
 
     /* Auto Chooser */
@@ -86,6 +90,7 @@ public class RobotContainer {
         autoChooser.addOption("BayouAuto", new BayouAuton(m_driveTrain, m_Shooter, m_deploy, m_Intake));
         autoChooser.addOption("OklaAuton", new OklaAuton(m_driveTrain, m_Shooter, m_deploy));
       //  autoChooser.addOption("EncoderAuto", new EncoderAuto(m_driveTrain));
+        //autoChooser.addOption("LimeAuton", new LimelightAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
         SmartDashboard.putData(autoChooser);
 
         // Configure the button bindings
@@ -98,7 +103,8 @@ public class RobotContainer {
         shooterButton2.whileHeld(new Shoot(m_Shooter, 0.95));
         deployButton.whileHeld(new DeployControl(m_deploy, -0.7));
         deployButton2.whileHeld(new DeployControl(m_deploy, 0.85));
-        reverseintakeButton.whileHeld(new IntakeControl(m_Intake, 0.55));
+       // reverseintakeButton.whileHeld(new IntakeControl(m_Intake, 0.55));
+        limeLightButton.whileHeld(new LimeDrive(()-> driver.getRawAxis(drivetrainSpeed), ()-> driver.getRawAxis(drivetrainRotation), m_limelight, m_driveTrain));
     }
 
     /**
