@@ -8,12 +8,15 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 //import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
+
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.Drivetrain;
 
 public class DriveTrain extends SubsystemBase {
@@ -24,6 +27,8 @@ public class DriveTrain extends SubsystemBase {
     DifferentialDrive drive;
     //Encoder leftEncoder;
     Double position;
+    public PigeonIMU gyro;
+    
     //public static TalonSRX leftFrontEncMotor = new TalonSRX(1);
    public static TalonSRX rightBackEncMotor = new TalonSRX(3);
     public static double kDriveTick2Feet = 1.0 / 4096 * 6 * Math.PI / 12;
@@ -42,7 +47,6 @@ public class DriveTrain extends SubsystemBase {
         //leftBackMotor.setInverted(true);
         //leftFrontMotor.setInverted(true);
 
-  
         //
     
        //rightFrontMotor.setNeutralMode(NeutralMode.Brake);
@@ -57,46 +61,7 @@ public class DriveTrain extends SubsystemBase {
         drive.setSafetyEnabled(false);
     
     }
-       /* leftFrontMotor.configPeakCurrentLimit(35, 10);   
-        leftFrontMotor.configPeakCurrentDuration(200,10);
-        leftFrontMotor.configContinuousCurrentLimit(30,10);
-    
-        
-        leftBackMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-        //
-
-        SmartDashboard.putNumber("left Enc Position", leftBackMotor.getSelectedSensorPosition());
-
-
-        rightBackEncMotor.setSensorPhase(true);
-    }
-
-      /*
-        leftBackMotor.follow(leftFrontEncMotor);
-        rightFrontMotor.follow(rightBackEncMotor);
-        leftBackMotor.setInverted(InvertType.FollowMaster);
-        rightFrontMotor.setInverted(InvertType.FollowMaster);
-*/
-        //init Encoders
-
-       // rightBackEncMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-       // leftFrontEncMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-
-
-       
-        //leftFrontEncMotor.setSensorPhase(false);
-
-        //reset encoders
-        
-
-        //encoder boundary
-        
-    
-        
-
-    
-
-
+     
     
     /*public void tankDrive(double leftSpeed, double rightSpeed) {
         drive.tankDrive(leftSpeed, rightSpeed);

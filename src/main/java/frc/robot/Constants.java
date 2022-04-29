@@ -24,6 +24,10 @@ public final class Constants {
         
     }
 
+    public static final class Ports {
+        public static final int Actuator = 7;
+    }
+
     public static final class Encoder {
         public static final int leftEncoder = 0;
         public static final int rightEncoder = 1;

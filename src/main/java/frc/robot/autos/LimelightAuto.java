@@ -17,19 +17,19 @@ import frc.robot.commands.Shoot;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Visionlight;
+import frc.robot.subsystems.limeMaster;
 import frc.robot.subsystems.Deploy;
 
 public class LimelightAuto extends SequentialCommandGroup {
 
 
-    public LimelightAuto(DriveTrain m_driveTrain, Shooter m_Shooter, Intake m_Intake, Deploy m_deploy){
+    public LimelightAuto(DriveTrain m_driveTrain, limeMaster m_limelight, Shooter m_Shooter, Intake m_Intake, Deploy m_deploy){
       
         //Temporary
 
         addCommands(
             new ParallelDeadlineGroup(
-                new LimeDrive(m_driveTrain, () -> 0, () -> 0)
+                new LimeDrive(() -> 0, () -> 0, m_limelight, m_driveTrain)
             )
 
 

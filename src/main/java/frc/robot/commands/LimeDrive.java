@@ -35,15 +35,25 @@ public class LimeDrive extends CommandBase {
   public void execute() {
     double kp = .0256;
     double xSpeed = speed.getAsDouble();
-
     double zRotation;
+    
+    
     if (m_limelight.getIsTargetFound()){
       zRotation = m_limelight.getdegRotationToTarget() * kp;
     }else{
       zRotation = rotation.getAsDouble();
     }
+
+    if(m_limelight.getTargetArea() < 0.4 && m_limelight.getTargetArea() != 0) {
+      xSpeed = -0.55;
+    }else {
+      xSpeed = speed.getAsDouble();
+    }
+
     m_driveTrain.arcadeDrive(xSpeed, zRotation);
-  }
+}
+   
+
 
   // Called once the command ends or is interrupted.
   @Override

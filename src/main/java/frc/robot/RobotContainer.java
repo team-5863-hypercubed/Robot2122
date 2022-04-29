@@ -1,6 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -9,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.autos.OneBallAuto;
 //import frc.robot.autos.EncoderAuto;
 import frc.robot.autos.OklaAuton;
-import frc.robot.autos.BayouAuton;
+import frc.robot.autos.LimelightAuto;
 //import frc.robot.autos.LimelightAuto;
 import frc.robot.autos.TwoBallAuto;
 import frc.robot.commands.Climb;
@@ -19,6 +21,7 @@ import frc.robot.commands.DeployControl;
 import frc.robot.subsystems.*;
 import frc.robot.commands.IntakeControl;
 import frc.robot.commands.LimeDrive;
+import frc.robot.commands.RotateTurret;
 
 
 public class RobotContainer {
@@ -33,6 +36,7 @@ public class RobotContainer {
 
     /* Operator Controls */
     private final int climbSpeed = XboxController.Axis.kLeftY.value;
+    private final int rotation = XboxController.Axis.kRightX.value;
     private final JoystickButton intakeButton = new JoystickButton(operator, XboxController.Button.kA.value);
     private final JoystickButton reverseshooterButton = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
     private final JoystickButton shooterButton2 = new JoystickButton(operator, XboxController.Button.kB.value);
@@ -49,7 +53,9 @@ public class RobotContainer {
     private final Shooter m_Shooter = new Shooter();
     private final Deploy m_deploy = new Deploy();
     private final limeMaster m_limelight = new limeMaster();
+    private final Turret m_turret = new Turret();
     //private final Encoders m_encoders = new Encoders();
+    public static Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
     /* Auto Chooser */
     SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -62,6 +68,8 @@ public class RobotContainer {
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        compressor.enableDigital();
+        
         m_driveTrain.setDefaultCommand(
             new TeleOPDrive(
                 m_driveTrain,
@@ -76,6 +84,13 @@ public class RobotContainer {
                 () -> operator.getRawAxis(climbSpeed)
             )
         );
+
+        m_turret.setDefaultCommand(
+            new RotateTurret(
+                m_turret,
+                () -> operator.getRawAxis(rotation)
+            )
+        );
         
         /*m_deploy.setDefaultCommand(
             new DeployControl(
@@ -85,12 +100,11 @@ public class RobotContainer {
         );*/
 
         /* Configure autos in sendable chooser */
-        autoChooser.setDefaultOption("OneBallAuto", new OneBallAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
+        autoChooser.setDefaultOption("OneBallAuto", new OneBallAuto(m_driveTrain, m_limelight, m_Shooter, m_Intake, m_deploy));
         autoChooser.addOption("TwoBallAuto", new TwoBallAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
-        autoChooser.addOption("BayouAuto", new BayouAuton(m_driveTrain, m_Shooter, m_deploy, m_Intake));
         autoChooser.addOption("OklaAuton", new OklaAuton(m_driveTrain, m_Shooter, m_deploy));
       //  autoChooser.addOption("EncoderAuto", new EncoderAuto(m_driveTrain));
-        //autoChooser.addOption("LimeAuton", new LimelightAuto(m_driveTrain, m_Shooter, m_Intake, m_deploy));
+        autoChooser.addOption("LimeAuton", new LimelightAuto(m_driveTrain, m_limelight, m_Shooter, m_Intake, m_deploy));
         SmartDashboard.putData(autoChooser);
 
         // Configure the button bindings
